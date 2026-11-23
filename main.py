@@ -20,7 +20,14 @@ def main():
                    check=True, cwd=HERE)
     out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", HERE / "out"))
     out_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(HERE / "news-frontpage.png", out_dir / "entry.png")
+    src = None
+    if os.environ.get("MAKEFUN_OUTPUT_DIR"):
+        cand = Path(os.environ["MAKEFUN_OUTPUT_DIR"]) / "news-frontpage.png"
+        if cand.exists():
+            src = cand
+    if src is None:
+        src = HERE / "news-frontpage.png"
+    shutil.copyfile(src, out_dir / "entry.png")
     print("wrote", out_dir / "entry.png")
 
 
