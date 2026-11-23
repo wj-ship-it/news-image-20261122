@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/news-image-20261122/wj-ship-it/news-image-20261122/rank.svg)](https://make.fun/bounty/news-image-20261122/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261122)
 [![reward](https://make.fun/badge/news-image-20261122/wj-ship-it/news-image-20261122/reward.svg)](https://make.fun/bounty/news-image-20261122?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261122)
 
-A make.fun bounty entry. `main.py` regenerates the image and copies it to
+A make.fun bounty entry. `main.py` copies the pre-rendered image to
 `out/entry.png` (or `$MAKEFUN_OUTPUT_DIR/entry.png`). The image is a
 newspaper front page summing up Sunday 22 November 2026 in six stories,
 drawn programmatically with Python PIL (see `render.py`) — no AI-generated
@@ -40,14 +40,19 @@ on its own, with no news feed and no date supplied.
 python3 main.py
 ```
 
-Regenerate the image:
+`main.py` copies the pre-rendered `news-frontpage.png` from this
+repository to `out/entry.png` (or `$MAKEFUN_OUTPUT_DIR/entry.png`) —
+pure standard library, no extra dependencies. Running `main.py` twice
+produces byte-identical output.
+
+To regenerate the image from scratch:
 
 ```sh
 python3 render.py
 ```
 
-This writes `out/entry.png` (1024×1024 PNG, under 1 MiB). Running
-`main.py` twice produces byte-identical output.
+This requires PIL installed on your machine, and writes
+`out/entry.png` (1024×1024 PNG, under 1 MiB).
 
 ---
 
