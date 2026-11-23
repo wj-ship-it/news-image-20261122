@@ -6,6 +6,8 @@ English; figures come straight from the verified brief and are not altered.
 Output: news-frontpage.png, 1024 x 1024, RGB.
 """
 
+import os
+
 from PIL import Image, ImageDraw, ImageFont
 
 W, H = 1024, 1024
@@ -24,7 +26,12 @@ SANS_BOLD = FONT_DIR + "/liberation/LiberationSans-Bold.ttf"
 
 
 def font(path, size):
-    return ImageFont.truetype(path, size)
+    try:
+        return ImageFont.truetype(path, size)
+    except OSError:
+        # Sandbox images may lack the Liberation fonts; fall back to the
+        # built-in default font rather than failing the whole render.
+        return ImageFont.load_default()
 
 
 def wrap(draw, text, fnt, max_w):
@@ -186,7 +193,10 @@ def main():
     d.text((right - 150, y + 10), "PAGE 1",
            font=font(SANS_BOLD, 15), fill=INK)
 
-    img.save("news-frontpage.png")
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR")
+    out_path = (os.path.join(out_dir, "news-frontpage.png")
+                if out_dir else "news-frontpage.png")
+    img.save(out_path)
     print("saved news-frontpage.png", img.size)
 
 
